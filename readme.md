@@ -15,7 +15,7 @@ $ curl -s "localhost:3000/mul?num1=4&num2=0"
 
 ```bash
 $ # build docker container locally
-$ docker run -it --name gocal teochenlgim/gocal:latest
+$ docker build . -t teochenglim/gocal:latest
 $ # docker push to docker.io
 $ docker push teoochenglim/gocal:latest
 $ # apply the deployment to kubernetes cluster
