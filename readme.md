@@ -1,10 +1,8 @@
 ### to compile and run locally
 
 ```bash
-$chenglim@chenglim-GL503VM:~/work/src/github.com/teochenglim/gocal$ pwd
-/home/chenglim/work/src/github.com/teochenglim/gocal
-$ dep init
 $ go build -o rest main.go
+$ ## Terminal 1
 $ ./rest
 $ ## Terminal 2
 $ curl -s "localhost:3000/mul?num1=4&num2=2"
@@ -14,6 +12,9 @@ $ curl -s "localhost:3000/mul?num1=4&num2=0"
 ### to deploy to the Kubernetes
 
 ```bash
+$chenglim@chenglim-GL503VM:~/work/src/github.com/teochenglim/gocal$ pwd
+/home/chenglim/work/src/github.com/teochenglim/gocal
+$ dep init
 $ # build docker container locally
 $ docker build . -t teochenglim/gocal:latest
 $ # docker push to docker.io
