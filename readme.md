@@ -30,6 +30,13 @@ $ curl -s "localhost:32160/add?num1=2&num2=4"
 
 ### to deploy Grafana and Prometheus
 ```bash
-$ helm install stable/prometheus --namespace monitoring  --name prometheus
-$ helm install stable/grafana --namespace monitoring --name grafana
+$ helm install stable/prometheus-operator --name prometheus-operator --namespace monitoring
+$ # Grafana password
+$ kubectl get secret --namespace monitoring prometheus-operator-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+$ # Grafana
+$ kubectl port-forward $(kubectl get pods --selector=app=grafana -n monitoring --output=jsonpath="{.items..metadata.name}") -n monitoring 3000
+$ # prometheus
+$ kubectl port-forward -n monitoring prometheus-prometheus-operator-prometheus-0 9090
+$ # alertmanager
+$ kubectl port-forward -n monitoring alertmanager-prometheus-operator-alertmanager-0 9093
 ```
