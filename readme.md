@@ -40,3 +40,8 @@ $ kubectl port-forward -n monitoring prometheus-prometheus-operator-prometheus-0
 $ # alertmanager
 $ kubectl port-forward -n monitoring alertmanager-prometheus-operator-alertmanager-0 9093
 ```
+
+### Load generator
+```bash
+$ for i in {1..3000}; do curl -s "localhost:32160/mul?num1=$i&num2=$i"; done
+```
