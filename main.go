@@ -18,6 +18,7 @@ type calResource struct {
 
 var x, y float64
 var err error
+var port int = 3000
 
 // Add performs addition of two numbers
 func Add(w http.ResponseWriter, r *http.Request) {
@@ -26,10 +27,10 @@ func Add(w http.ResponseWriter, r *http.Request) {
   x, err := strconv.ParseFloat(num1, 64)
   y, err := strconv.ParseFloat(num2, 64)
   if err != nil {
-  		fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\"}", "Error detected at input.")
+  		fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\"}\n", "Error detected at input.")
       return
   }
-  fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": %f }", x, y, x + y)
+  fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": %f }\n", x, y, x + y)
 }
 
 // Subtract performs subtraction of two numbers
@@ -39,10 +40,10 @@ func Subtract(w http.ResponseWriter, r *http.Request) {
   x, err := strconv.ParseFloat(num1, 64)
   y, err := strconv.ParseFloat(num2, 64)
   if err != nil {
-  		fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\"}", "Error detected at input.")
+  		fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\"}\n", "Error detected at input.")
       return
   }
-  fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": %f }", x, y, x - y)
+  fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": %f }\n", x, y, x - y)
 }
 
 // Multiply performs multiplication of two numbers
@@ -52,10 +53,10 @@ func Multiply(w http.ResponseWriter, r *http.Request) {
   x, err := strconv.ParseFloat(num1, 64)
   y, err := strconv.ParseFloat(num2, 64)
   if err != nil {
-  		fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\"}", "Error detected at input.")
+  		fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\"}\n", "Error detected at input.")
       return
   }
-  fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": %f }", x, y, x * y)
+  fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": %f }\n", x, y, x * y)
 }
 
 // Divide performs division of two numbers
@@ -65,19 +66,19 @@ func Divide(w http.ResponseWriter, r *http.Request) {
   x, err := strconv.ParseFloat(num1, 64)
   y, err := strconv.ParseFloat(num2, 64)
   if err != nil {
-  		fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\"}", "Error detected at input.")
+  		fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\"}\n", "Error detected at input.")
       return
   }
   if y == 0 {
       // fmt.Println("Division by zero is not allowed. We return 0.")
-      fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\" }", x, y, "Can't divide by 0.")
+      fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": \"%s\" }\n", x, y, "Can't divide by 0.")
       return
   }
-  fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": %f }", x, y, x / y)
+  fmt.Fprintf(w, "{ \"num1\": %f, \"num2\": %f, \"answers\": %f }\n", x, y, x / y)
 }
 
 func main() {
-  fmt.Println("Starting server on port :3000")
+  fmt.Println("Starting server on port", port)
 
 	r := chi.NewRouter()
 
@@ -87,7 +88,7 @@ func main() {
   r.Use(middleware.Recoverer)
 
   r.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
-  	w.Write([]byte("pong"))
+  	w.Write([]byte("pong\n"))
   })
 
   r.Get("/add", Add)
@@ -95,6 +96,7 @@ func main() {
   r.Get("/mul", Multiply)
   r.Get("/div", Divide)
 
-  http.ListenAndServe(":3000", r)
+  lport := fmt.Sprintf(":%d", port)
+  http.ListenAndServe(lport, r)
 
 }
