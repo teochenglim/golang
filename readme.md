@@ -14,7 +14,7 @@ $ curl -s "localhost:3000/mul?num1=4&num2=0"
 ```bash
 $chenglim@chenglim-GL503VM:~/work/src/github.com/teochenglim/gocal$ pwd
 /home/chenglim/work/src/github.com/teochenglim/gocal
-$ dep init
+$ dep ensure
 $ # build docker container locally
 $ docker build . -t teochenglim/gocal:latest
 $ # docker push to docker.io
